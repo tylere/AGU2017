@@ -1,5 +1,4 @@
-#TAG 7fd175ec22c7
-FROM jupyter/scipy-notebook@sha256:eaab9c52bf615d5843f006a7ec93a3ec71b323bb0ba723b807fdca41508fc009
+FROM jupyter/scipy-notebook:7fd175ec22c7
 
 LABEL maintainer="Tyler Erickson <tylere@google.com>"
 
