@@ -14,6 +14,7 @@ RUN apt-get update \
   && pip install ipywidgets==7.0.3 \
   && jupyter nbextension enable --py --sys-prefix widgetsnbextension \
   && jupyter labextension install @jupyter-widgets/jupyterlab-manager@0.30.1 \
+  && jupyter labextension install @jupyter-widgets/controls@1.1.2 \
   && apt-get purge -y build-essential \
              dpkg-dev \
              pkg-config \
