@@ -54,3 +54,9 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 USER $NB_USER
+
+# Make sure contents are in HOME and owned by the non-root user.
+COPY . ${HOME}
+USER root
+RUN chown -R ${NB_UID} ${HOME}
+USER ${NB_USER}
