@@ -4,16 +4,19 @@ LABEL maintainer="Tyler Erickson <tylere@google.com>"
 
 USER root
 
+# Upgrade JupyterLab
+RUN conda install jupyterlab==0.30.4
+
 # Install ipywidgets (https://github.com/jupyter-widgets/ipywidgets).
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
+ && apt-get install -y --no-install-recommends \
              libjpeg-dev \
              libgif-dev \
              libcairo2-dev \
              pkg-config \
-  && pip install ipywidgets==7.0.3 \
+  && pip install ipywidgets==7.0.5 \
   && jupyter nbextension enable --py --sys-prefix widgetsnbextension \
-  && jupyter labextension install @jupyter-widgets/jupyterlab-manager@0.30.1 \
+  && jupyter labextension install @jupyter-widgets/jupyterlab-manager@0.31.3 \
   && apt-get purge -y build-essential \
              dpkg-dev \
              pkg-config \
@@ -24,10 +27,10 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # Install bqplot. (https://github.com/bloomberg/bqplot).
-RUN pip install bqplot==0.10.1 \
-  && jupyter nbextension install bqplot --py --symlink --sys-prefix \
-  && jupyter nbextension enable --py --sys-prefix bqplot \
-  && jupyter labextension install bqplot
+RUN pip install bqplot==0.10.1
+RUN jupyter nbextension install bqplot --py --symlink --sys-prefix
+RUN jupyter nbextension enable --py --sys-prefix bqplot
+RUN jupyter labextension install bqplot
 
 # Install ipyleaflet. (https://github.com/ellisonbg/ipyleaflet)
 RUN pip install ipyleaflet==0.5.1 \
