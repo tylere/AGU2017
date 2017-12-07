@@ -5,11 +5,13 @@ LABEL maintainer="Tyler Erickson <tylere@google.com>"
 USER root
 
 # Upgrade JupyterLab
-RUN conda install jupyterlab==0.30.4
+#RUN conda install jupyterlab==0.30.4
+RUN pip install git+git://github.com/blink1073/jupyterlab.git@fix-module-check \
+  && jupyter serverextension enable --py jupyterlab --sys-prefix
 
 # Install ipywidgets (https://github.com/jupyter-widgets/ipywidgets).
 RUN apt-get update \
- && apt-get install -y --no-install-recommends \
+  && apt-get install -y --no-install-recommends \
              libjpeg-dev \
              libgif-dev \
              libcairo2-dev \
@@ -27,10 +29,10 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # Install bqplot. (https://github.com/bloomberg/bqplot).
-RUN pip install bqplot==0.10.1
-RUN jupyter nbextension install bqplot --py --symlink --sys-prefix
-RUN jupyter nbextension enable --py --sys-prefix bqplot
-RUN jupyter labextension install bqplot
+RUN pip install bqplot==0.10.1 \
+  && jupyter nbextension install bqplot --py --symlink --sys-prefix \
+  && jupyter nbextension enable --py --sys-prefix bqplot \
+  && jupyter labextension install bqplot
 
 # Install ipyleaflet. (https://github.com/ellisonbg/ipyleaflet)
 RUN pip install ipyleaflet==0.5.1 \
@@ -58,7 +60,8 @@ RUN apt-get update \
 
 USER $NB_USER
 
-# Make sure contents are in HOME and owned by the non-root user.
+# Make sure contents are in HOME and owned by the non-root user, which is required by Binder.
+# http://mybinder.readthedocs.io/en/latest/dockerfile.html#preparing-your-dockerfile
 COPY . ${HOME}
 USER root
 RUN chown -R ${NB_UID} ${HOME}
