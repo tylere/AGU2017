@@ -5,9 +5,7 @@ LABEL maintainer="Tyler Erickson <tylere@google.com>"
 USER root
 
 # Upgrade JupyterLab
-#RUN conda install jupyterlab==0.30.4
-RUN pip install git+git://github.com/blink1073/jupyterlab.git@fix-module-check \
-  && jupyter serverextension enable --py jupyterlab --sys-prefix
+RUN conda install jupyterlab==0.30.5
 
 # Install ipywidgets (https://github.com/jupyter-widgets/ipywidgets).
 RUN apt-get update \
