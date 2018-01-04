@@ -16,4 +16,4 @@ A JupyterLab instance with Earth Engine enabled can be launched by clicking on t
 
 Relevant links:
 
-* Google at AGU 2017: [g.co/earth/agu2017](g.co/earth/agu2017)
+* Google at AGU 2017: [g.co/earth/agu2017](https://g.co/earth/agu2017)
